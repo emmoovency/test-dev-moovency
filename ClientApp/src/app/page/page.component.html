@@ -1,0 +1,16 @@
+<div *ngIf="!error">
+  <div class="alert alert-success" role="alert">
+    <h2>Step 5</h2>
+
+    <p>Test completed</p>
+    <img [src]="src" />
+  </div>
+</div>
+
+<div *ngIf="error" class="alert alert-danger" role="alert">
+  <h5>An error occured, please try again later :(</h5>
+  <pre>{{ error | json }}</pre>
+
+  <!-- show only in dev env -->
+  <!-- <pre>{{ error.message }}</pre> -->
+</div>

@@ -1,0 +1,84 @@
+<h1 id="tableLabel">Blog posts example</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+<div
+  class="alert alert-primary"
+  role="alert"
+  *ngIf="error && blogs.length == 0"
+>
+  <h2>Step 2</h2>
+
+  <p>Bug correction</p>
+  <p>The blog list is not complete and you need to find the missing blogs</p>
+</div>
+
+<div
+  class="alert alert-primary"
+  role="alert"
+  *ngIf="
+    (error && blogs.length > 0) ||
+    (!error && blogs.length > 0 && !step4Description)
+  "
+>
+  <h2>Step 3</h2>
+
+  <p>Missing data</p>
+  <p>The blog list is now visible</p>
+  <p>Maybe one of them contains a secret ?</p>
+</div>
+
+<div class="alert alert-primary" role="alert" *ngIf="!!this.step4Description">
+  <h2>Step 4</h2>
+  {{ step4Description | json }}
+</div>
+
+<p *ngIf="!blogs"><em>Loading...</em></p>
+
+<table class="table table-striped" aria-labelledby="tableLabel" *ngIf="blogs">
+  <thead>
+    <tr>
+      <th>BlogId</th>
+      <th>Url</th>
+      <th>Posts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let b of blogs">
+      <td>{{ b.blogId }}</td>
+      <td>
+        <button class="btn btn-success" (click)="openBlog(b)">
+          {{ b.url }}
+        </button>
+      </td>
+      <td>{{ b.posts.length }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="!!opennedBlog">
+  <h1>{{ opennedBlog.url }}</h1>
+
+  <p *ngIf="opennedBlog?.blogId == -1">Hum... why is this empty</p>
+
+  <p *ngFor="let b of opennedBlog.posts">
+    {{ b | json }}
+  </p>
+</div>
+<div
+  style="
+    position: absolute;
+    bottom: 0;
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%, -25px);
+  "
+  *ngIf="error"
+  class="alert alert-danger"
+  role="alert"
+>
+  <h5>An error occured, please try again later :(</h5>
+  <pre>{{ error?.message }}</pre>
+
+  <!-- show only in dev env -->
+  <!-- <pre>{{ error.message }}</pre> -->
+</div>
